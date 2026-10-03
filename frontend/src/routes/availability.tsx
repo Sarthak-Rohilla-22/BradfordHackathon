@@ -32,11 +32,14 @@ function Availability() {
   const [slotId, setSlotId] = useState<string>("");
   useEffect(() => {
     if (!q.data) return;
-    setDate(move?.slot?.date ?? dates[0] ?? "");
-    setSlotId(move?.slot?.id ?? "");
-  }, [q.data]);
+    const selected = q.data.find((slot) => slot.id === move?.slot?.id && slot.available);
+    const firstAvailable = q.data.find((slot) => slot.available);
+    const initial = selected ?? firstAvailable;
+    setDate(initial?.date ?? move?.slot?.date ?? dates[0] ?? "");
+    setSlotId(initial?.id ?? "");
+  }, [q.data, move?.slot?.id, move?.slot?.date, dates]);
   const slots = (q.data ?? []).filter((s) => s.date === date);
-  const chosen = q.data?.find((s) => s.id === slotId);
+  const chosen = q.data?.find((s) => s.id === slotId && s.available);
 
   async function next() {
     if (!chosen) return;

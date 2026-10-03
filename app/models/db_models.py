@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from typing import Optional
 from sqlmodel import Field, SQLModel
 
@@ -17,7 +17,7 @@ class Enquiry(SQLModel, table=True):
   items_json: str
   preferred_date: date
   status: str = "QUOTED"
-  created_at: datetime = Field(default_factory=datetime.utcnow)
+  created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class Quote(SQLModel, table=True):
@@ -36,7 +36,7 @@ class Quote(SQLModel, table=True):
   total_price: float
   status: str = "ISSUED"
   expires_at: datetime
-  created_at: datetime = Field(default_factory=datetime.utcnow)
+  created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class Booking(SQLModel, table=True):
@@ -45,7 +45,7 @@ class Booking(SQLModel, table=True):
   scheduled_date: date
   selected_time_slot: str
   status: str = "CONFIRMED"
-  created_at: datetime = Field(default_factory=datetime.utcnow)
+  created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 
 class Vehicle(SQLModel, table=True):

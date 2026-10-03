@@ -40,7 +40,7 @@ export function computeLogistics(move: Move, catalogue: CatalogueItem[], rules: 
   let dismantle = 0;
   for (const it of move.inventory) {
     const cat = byId.get(it.catalogueId);
-    const unit = cat ? (cat.volume[0] + cat.volume[1]) / 2 : 0.5;
+    const unit = it.volumeM3 ?? (cat ? (cat.volume[0] + cat.volume[1]) / 2 : 0.5);
     volume += unit * it.qty;
     if (cat) maxCrew = Math.max(maxCrew, cat.minCrew);
     if (it.special || cat?.special) special.push(it.name);

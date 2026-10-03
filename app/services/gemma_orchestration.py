@@ -1,5 +1,5 @@
-from typing import List, Optional
-from pydantic import BaseModel
+from typing import List
+from pydantic import BaseModel, Field
 
 class ExtractedItem(BaseModel):
     name: str
@@ -16,12 +16,14 @@ class GemmaExtractionResult(BaseModel):
     bedrooms: int = 2
     floor_level: int = 1
     has_lift: bool = False
-    items: List[ExtractedItem] = []
+    items: List[ExtractedItem] = Field(default_factory=list)
     preferred_date: str = "2026-10-20"
     confidence_score: float = 0.94
 
 def parse_enquiry_text(prompt: str) -> GemmaExtractionResult:
     """Parses raw customer moving requests into structured NLU data using Gemma 4 schema."""
+    if not prompt.strip():
+        raise ValueError("prompt cannot be empty")
     # Returns structured extraction model
     return GemmaExtractionResult(
         customer_name="Alex Turner",

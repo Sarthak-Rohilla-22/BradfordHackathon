@@ -35,7 +35,12 @@ function Analysis() {
       qc.invalidateQueries();
       setTimeout(() => { if (window.location.pathname === "/analysis") nav({ to: "/inventory", replace: true }); }, 500);
     } catch (e) {
-      setErr((e as Error).message === "NO_PHOTOS" ? "nophotos" : "fail");
+      const message = e instanceof Error ? e.message : "Photo recognition failed. Please try again.";
+      setErr(message === "NO_PHOTOS" ? "nophotos" : message === "PHOTO_DATA_MISSING"
+        ? "These saved photos are from an older session and no longer contain image data. Go back, remove them, and upload them again."
+        : message === "UNSUPPORTED_PHOTO_FORMAT"
+          ? "A photo could not be prepared for analysis. Please upload a JPG, PNG or WebP image."
+          : message);
     }
   }, [nav, qc]);
 
@@ -45,13 +50,13 @@ function Analysis() {
     <CustomerShell step="photos">
       <div className="mx-auto max-w-sm pt-10">
         <Hand className="text-2xl">having a look...</Hand>
-        <h1 className="mt-3 text-2xl font-semibold tracking-[-0.02em]">Building your inventory</h1>
-        <p className="mt-2 text-sm text-muted-foreground">This usually takes under a minute. You can stay on this page.</p>
+        <h1 className="mt-3 text-2xl font-semibold tracking-[-0.02em]">Recognising your items</h1>
+        <p className="mt-2 text-sm text-muted-foreground">Gemini is checking your photos. You can review and correct every result.</p>
 
         {err === "nophotos" ? (
           <div className="mt-8"><ErrorState title="No photos yet" body="We need at least one photo of your home to get started." /><Button asChild className="mt-4"><Link to="/upload">Add photos</Link></Button></div>
         ) : err ? (
-          <div className="mt-8"><ErrorState body="We couldn't analyse those photos. Your uploads are still here — try again." onRetry={run} /></div>
+          <div className="mt-8"><ErrorState body={err} onRetry={run} /></div>
         ) : (
           <ol className="mt-10 space-y-4" aria-live="polite">
             {api.ANALYSIS_STAGES.map((s, i) => {

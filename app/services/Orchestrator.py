@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import Optional
 from app.services.gemma_orchestration import parse_enquiry_text, GemmaExtractionResult
 from app.services.openloft_memory import query_openloft_memory, MemoryNote
 from app.services.quote_engine import calculate_quote, CalculatedQuote

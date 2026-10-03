@@ -1,4 +1,3 @@
-import math
 from pydantic import BaseModel
 
 class CalculatedQuote(BaseModel):
@@ -18,7 +17,8 @@ def calculate_quote(
     volume_m3: float,
     distance_miles: float,
     floor_level: int = 0,
-    has_lift: bool = False
+    has_lift: bool = False,
+    buffer_minutes: int = 0,
 ) -> CalculatedQuote:
     """
     Calculates cost, duration, vehicle, and crew requirements for removals.
@@ -41,11 +41,15 @@ def calculate_quote(
         movers_required = 4
         vehicle_base_rate = 260.0
 
-    # 2. Duration Estimation (Loading/Unloading + Driving)
+    if buffer_minutes < 0:
+        raise ValueError("buffer_minutes cannot be negative")
+
+    # 2. Duration Estimation (Loading/Unloading + Driving + access buffer)
     # Estimate ~3.5 m3 per hour per mover + travel time at 25 mph average speed
     loading_hours = max(1.5, volume_m3 / (3.5 * movers_required))
     driving_hours = distance_miles / 25.0
-    estimated_duration_hours = round(loading_hours + driving_hours, 1)
+    buffer_hours = buffer_minutes / 60.0
+    estimated_duration_hours = round(loading_hours + driving_hours + buffer_hours, 1)
 
     # 3. Cost Breakdown
     hourly_rate_per_mover = 25.0

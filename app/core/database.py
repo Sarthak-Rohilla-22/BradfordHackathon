@@ -1,17 +1,17 @@
 import os
+from app.models.db_models import Booking, Crew, Enquiry, Quote, Vehicle
 from sqlmodel import Session, SQLModel, create_engine
 
-# Replace with your actual Supabase URI string or set DATABASE_URL environment variable
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://postgres:[bradford_hackathon]@db.dbpmxffqzrjgtkmwgdwm.supabase.co:5432/postgres",
+    "sqlite:///./yorkmove.db",
 )
 
-engine = create_engine(DATABASE_URL, echo=True)
+connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+engine = create_engine(DATABASE_URL, connect_args=connect_args)
 
 
 def init_db():
-  # Creates tables on Supabase if they don't exist
   SQLModel.metadata.create_all(engine)
 
 

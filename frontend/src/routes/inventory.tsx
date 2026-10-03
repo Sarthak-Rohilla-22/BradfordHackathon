@@ -81,6 +81,11 @@ function Inventory() {
         <EmptyState title="No inventory yet" body="Upload a few photos of your home and we'll put a list together for you." action={<Button asChild><Link to="/upload">Add photos</Link></Button>} />
       ) : (
         <div className="space-y-4">
+          {move?.analysed && !items.length && (
+            <div role="status" className="rounded-lg border border-border bg-card px-4 py-3.5 text-sm leading-relaxed">
+              No movable items were confidently identified in these photos. Add anything that was missed below; your quote uses the inventory you confirm.
+            </div>
+          )}
           {review.length > 0 && (
             <div className="rounded-lg border border-amber/30 bg-amber-soft px-4 py-3.5">
               <p className="text-sm font-medium">{review.length} item{review.length > 1 ? "s" : ""} need review</p>

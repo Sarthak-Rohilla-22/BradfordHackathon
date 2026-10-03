@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlmodel import Session
@@ -10,14 +10,14 @@ router = APIRouter()
 
 class BookingRequest(BaseModel):
     quote_id: int
-    scheduled_date: str
+    scheduled_date: date
     selected_time_slot: str
 
 
 class BookingResponse(BaseModel):
     booking_id: int
     status: str
-    scheduled_date: str
+    scheduled_date: date
     selected_time_slot: str
 
 
@@ -27,11 +27,9 @@ def confirm_booking(request: BookingRequest, session: Session = Depends(get_sess
     if not quote:
         raise HTTPException(status_code=404, detail="Quote not found")
 
-    sched_date = datetime.strptime(request.scheduled_date, "%Y-%m-%d").date()
-
     booking = Booking(
         quote_id=quote.id,
-        scheduled_date=sched_date,
+        scheduled_date=request.scheduled_date,
         selected_time_slot=request.selected_time_slot,
         status="CONFIRMED",
     )
@@ -42,6 +40,6 @@ def confirm_booking(request: BookingRequest, session: Session = Depends(get_sess
     return BookingResponse(
         booking_id=booking.id,
         status=booking.status,
-        scheduled_date=str(booking.scheduled_date),
+        scheduled_date=booking.scheduled_date,
         selected_time_slot=booking.selected_time_slot,
     )

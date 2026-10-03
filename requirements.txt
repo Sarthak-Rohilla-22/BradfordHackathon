@@ -1,0 +1,5 @@
+fastapi
+pg8000
+python-dotenv
+sqlmodel
+uvicorn[standard]

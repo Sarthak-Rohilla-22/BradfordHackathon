@@ -28,6 +28,7 @@ export const Route = createFileRoute("/upload")({
 });
 
 const ROOMS = ["Living room", "Bedroom", "Kitchen", "Dining room", "Office", "Garage", "Loft"];
+const MAX_PHOTOS = 12;
 const SAMPLES = [
   { url: living, name: "living-room.jpg", room: "Living room" },
   { url: hero, name: "living-room-2.jpg", room: "Living room" },
@@ -46,31 +47,73 @@ function Upload() {
   const camRef = useRef<HTMLInputElement>(null);
   useEffect(() => { if (move) setPhotos(move.photos); }, [move?.id]);
 
-  function finish(p: Photo, fail = false) {
-    const done: Photo = fail ? { ...p, status: "failed", error: "We couldn't upload this photo." } : { ...p, status: "uploaded" };
+  function finish(p: Photo, error?: string) {
+    const done: Photo = error ? { ...p, status: "failed", error } : { ...p, status: "uploaded" };
     setPhotos((ps) => ps.map((x) => (x.id === p.id ? done : x)));
-    api.uploadPhotos([done]);
+    void api.uploadPhotos([done]).catch(() => {
+      setPhotos((ps) => ps.map((x) => (x.id === p.id ? { ...x, status: "failed", error: "Couldn't save this photo. Remove it and try again." } : x)));
+    });
   }
   function startUpload(list: Photo[]) {
     setPhotos((ps) => [...ps, ...list]);
-    list.forEach((p, i) => setTimeout(() => finish(p, p.name.toLowerCase().includes("fail")), 600 + i * 220));
+    list.forEach((p, i) => setTimeout(() => finish(p), 600 + i * 220));
   }
-  function addFiles(files: FileList | null) {
+  async function preparePhoto(file: File): Promise<string> {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, 1280 / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+    canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+    canvas.getContext("2d")?.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    bitmap.close();
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      canvas.toBlob((result) => result ? resolve(result) : reject(new Error("Couldn't resize this image.")), "image/jpeg", 0.8);
+    });
+    return await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => typeof reader.result === "string" ? resolve(reader.result) : reject(new Error("Couldn't read this image."));
+      reader.onerror = () => reject(new Error("Couldn't read this image."));
+      reader.readAsDataURL(blob);
+    });
+  }
+  async function addFiles(files: FileList | null) {
     if (!files) return;
     const ok: Photo[] = []; const bad: typeof rejected = [];
-    Array.from(files).forEach((f) => {
+    const selectedFiles = Array.from(files);
+    const remaining = Math.max(0, MAX_PHOTOS - photos.length);
+    if (selectedFiles.length > remaining) {
+      bad.push({ name: "Additional photos", reason: `You can analyse up to ${MAX_PHOTOS} photos at a time.` });
+    }
+    for (const f of selectedFiles.slice(0, remaining)) {
       const err = api.validatePhoto(f);
       if (err) bad.push({ name: f.name, reason: err });
-      else ok.push({ id: api.uid(), url: URL.createObjectURL(f), name: f.name, status: "uploading" });
-    });
+      else {
+        try {
+          ok.push({ id: api.uid(), url: URL.createObjectURL(f), dataUrl: await preparePhoto(f), name: f.name, status: "uploading" });
+        } catch {
+          bad.push({ name: f.name, reason: "This image can't be read by your browser. Try saving it as a JPG or PNG." });
+        }
+      }
+    }
     setRejected(bad);
     startUpload(ok);
   }
-  function addSamples() {
-    startUpload(SAMPLES.filter((s) => !photos.some((p) => p.name === s.name)).map((s) => ({ id: api.uid(), ...s, status: "uploading" as const })));
+  async function addSamples() {
+    const additions: Photo[] = [];
+    for (const sample of SAMPLES.filter((item) => !photos.some((photo) => photo.name === item.name))) {
+      try {
+        const response = await fetch(sample.url);
+        if (!response.ok) throw new Error("Sample image couldn't be loaded.");
+        const file = new File([await response.blob()], sample.name, { type: "image/jpeg" });
+        additions.push({ id: api.uid(), ...sample, dataUrl: await preparePhoto(file), status: "uploading" });
+      } catch {
+        setRejected((current) => [...current, { name: sample.name, reason: "Couldn't prepare this sample photo. Please try again." }]);
+      }
+    }
+    startUpload(additions);
   }
   function remove(id: string) { setPhotos((ps) => ps.filter((p) => p.id !== id)); api.removePhoto(id); }
-  function retry(p: Photo) { const np = { ...p, status: "uploading" as const, error: undefined, name: p.name.replace(/fail/i, "") }; setPhotos((ps) => ps.map((x) => (x.id === p.id ? np : x))); setTimeout(() => finish(np), 700); }
+  function retry(p: Photo) { const np = { ...p, status: "uploading" as const, error: undefined }; setPhotos((ps) => ps.map((x) => (x.id === p.id ? np : x))); setTimeout(() => finish(np), 700); }
 
   const uploaded = photos.filter((p) => p.status === "uploaded").length;
   const uploading = photos.some((p) => p.status === "uploading");
@@ -101,6 +144,9 @@ function Upload() {
         <ImagePlus className="mx-auto size-7 text-taupe" strokeWidth={1.5} />
         <p className="mt-3 font-medium">Drop your photos here</p>
         <p className="mt-1 text-sm text-muted-foreground">JPG, PNG, WebP or HEIC · up to 15 MB each</p>
+        <p className="mx-auto mt-2 max-w-md text-xs leading-relaxed text-muted-foreground">
+          Photos are resized and sent to Google Gemini for recognition. Results are estimates, so please review your inventory.
+        </p>
         <div className="mt-5 flex flex-wrap justify-center gap-2">
           <Button variant="default" onClick={() => camRef.current?.click()} className="sm:hidden"><Camera /> Take photos</Button>
           <Button variant="outline" onClick={() => fileRef.current?.click()}>Choose photos</Button>
