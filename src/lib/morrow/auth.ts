@@ -37,7 +37,7 @@ const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 export async function signIn(email: string, password: string, role: Role) {
   await wait(700);
   if (password.length < 8) throw new Error("That email and password don't match.");
-  const name = email.split("@")[0].replace(/[._]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const name = (email.split("@")[0] ?? "").replace(/[._]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   write({ name, email, role });
 }
 export async function signUp(name: string, email: string, _password: string, role: Role) {

@@ -25,7 +25,7 @@ function Customers() {
             <thead className="border-b border-border text-left text-xs text-muted-foreground"><tr>{["Name", "Email", "Phone", "Previous moves", "Active booking", "Memories"].map((h) => <th key={h} className="px-4 py-2.5 font-medium">{h}</th>)}</tr></thead>
             <tbody className="divide-y divide-border">
               {rows.map((c) => {
-                const m = mem.filter((x) => x.title.includes(c.name) || x.title.includes(c.area.split(",")[0])).length;
+                const m = mem.filter((x) => x.title.includes(c.name) || x.title.includes(c.area.split(",")[0] ?? "")).length;
                 return (
                   <tr key={c.id}>
                     <td className="px-4 py-3"><p className="font-medium">{c.name}</p><p className="text-xs text-muted-foreground">{c.area}</p></td>

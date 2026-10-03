@@ -1,7 +1,7 @@
 export type DimSource = "estimated" | "confirmed";
 export interface Dims { l: number; w: number; h: number }
 
-export interface Photo { id: string; url: string; name: string; room?: string | undefined; status: "uploading" | "uploaded" | "failed"; error?: string }
+export interface Photo { id: string; url: string; name: string; room?: string | undefined; status: "uploading" | "uploaded" | "failed"; error?: string | undefined }
 
 export interface InventoryItem {
   id: string;

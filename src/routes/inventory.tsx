@@ -44,7 +44,7 @@ function Inventory() {
     onSuccess: (_d, _id, ctx) => toast("Item removed", { action: { label: "Undo", onClick: async () => { const it = ctx?.prev?.find((x) => x.id === _id); if (it) { await api.addInventoryItem(it.catalogueId === "custom" ? null : it.catalogueId, it.room, it.name); qc.invalidateQueries({ queryKey: inventoryQ.queryKey }); } } } }),
   });
   const add = useMutation({
-    mutationFn: ({ id, room, custom }: { id: string | null; room: string; custom?: string }) => api.addInventoryItem(id, room, custom),
+    mutationFn: ({ id, room, custom }: { id: string | null; room: string; custom?: string | undefined }) => api.addInventoryItem(id, room, custom),
     onSuccess: (it) => { setItems((xs) => [...xs, it]); toast(`${it.name} added to ${it.room}`); },
   });
   const confirm = useMutation({

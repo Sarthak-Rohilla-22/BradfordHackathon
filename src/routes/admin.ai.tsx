@@ -25,7 +25,7 @@ function Ai() {
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <Section title="Responsibilities">
           <ul className="space-y-2 text-sm">
-            {[["Object recognition & counting", "AI"], ["Room classification", "AI"], ["Approximate dimensions", "AI · customer verifies"], ["Volume & weight", "Item Catalogue"], ["Vehicle & crew", "Logistics rules"], ["Price", "Pricing Rules"], ["Availability", "Calendar"]].map(([k, v]) => <li key={k} className="flex justify-between"><span>{k}</span><Tag tone={v.startsWith("AI") ? "neutral" : "sage"}>{v}</Tag></li>)}
+            {[["Object recognition & counting", "AI"], ["Room classification", "AI"], ["Approximate dimensions", "AI · customer verifies"], ["Volume & weight", "Item Catalogue"], ["Vehicle & crew", "Logistics rules"], ["Price", "Pricing Rules"], ["Availability", "Calendar"]].map(([k, v]) => <li key={k} className="flex justify-between"><span>{k}</span><Tag tone={v!.startsWith("AI") ? "neutral" : "sage"}>{v}</Tag></li>)}
           </ul>
         </Section>
         <Section title="Recent jobs with photo inventories">

@@ -38,7 +38,7 @@ export function ProgressSteps({ current }: { current: StepKey }) {
         })}
       </ol>
       <p className="mt-1.5 text-[0.7rem] text-muted-foreground sm:hidden">
-        Step {idx + 1} of {STEPS.length} · <span className="text-foreground">{STEPS[idx].label}</span>
+        Step {idx + 1} of {STEPS.length} · <span className="text-foreground">{STEPS[idx]?.label}</span>
       </p>
     </nav>
   );

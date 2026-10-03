@@ -16,7 +16,7 @@ export const Route = createFileRoute("/admin/calendar")({
 });
 
 const H0 = 8, H1 = 20;
-const toH = (t: string) => { const [h, m] = t.split(":").map(Number); return h + m / 60; };
+const toH = (t: string) => { const [h = 0, m = 0] = t.split(":").map(Number); return h + m / 60; };
 
 function Cal() {
   const { data: jobs, isLoading } = useQuery(jobsQ);

@@ -25,7 +25,7 @@ const MODES: { k: Doorway["mode"]; l: string }[] = [
   { k: "exact", l: "Measured" }, { k: "approx", l: "Roughly" }, { k: "size", l: "Small / standard / wide" }, { k: "unsure", l: "I'm not sure" },
 ];
 
-export function DoorwayForm({ doorway, onChange, onRemove }: { doorway: Doorway; onChange: (d: Doorway) => void; onRemove?: () => void }) {
+export function DoorwayForm({ doorway, onChange, onRemove }: { doorway: Doorway; onChange: (d: Doorway) => void; onRemove?: (() => void) | undefined }) {
   const num = (v: string) => (v ? Math.max(0, parseInt(v, 10) || 0) : undefined);
   return (
     <div className="rounded-lg border border-border bg-card p-4">
