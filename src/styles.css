@@ -7,6 +7,7 @@
 @theme inline {
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-hand: "Caveat", cursive;
+  --font-display: "Inter Tight", "Geist", ui-sans-serif, system-ui, sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -112,8 +113,16 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "tnum" 0;
+    font-feature-settings: "ss01", "cv11";
+    letter-spacing: -0.006em;
   }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+  ::selection { background: var(--color-beige); }
   :focus-visible {
     outline: 2px solid var(--color-ring);
     outline-offset: 2px;

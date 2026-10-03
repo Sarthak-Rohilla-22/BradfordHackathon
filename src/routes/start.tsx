@@ -41,6 +41,7 @@ function Start() {
   async function go() {
     setTouched(true);
     if (!valid) return;
+    if (move?.bookingRef) await api.createMove();
     await api.updateMove(f);
     qc.invalidateQueries();
     nav({ to: "/upload" });

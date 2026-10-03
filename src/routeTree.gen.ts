@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AnalysisRouteImport } from './routes/analysis'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AvailabilityRouteImport } from './routes/availability'
 import { Route as BookingRouteImport } from './routes/booking'
 import { Route as ConfirmationRouteImport } from './routes/confirmation'
@@ -49,6 +50,11 @@ const AdminRoute = AdminRouteImport.update({
 const AnalysisRoute = AnalysisRouteImport.update({
   id: '/analysis',
   path: '/analysis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AvailabilityRoute = AvailabilityRouteImport.update({
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/analysis': typeof AnalysisRoute
+  '/auth': typeof AuthRoute
   '/availability': typeof AvailabilityRoute
   '/booking': typeof BookingRoute
   '/confirmation': typeof ConfirmationRoute
@@ -198,6 +205,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
+  '/auth': typeof AuthRoute
   '/availability': typeof AvailabilityRoute
   '/booking': typeof BookingRoute
   '/confirmation': typeof ConfirmationRoute
@@ -227,6 +235,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/analysis': typeof AnalysisRoute
+  '/auth': typeof AuthRoute
   '/availability': typeof AvailabilityRoute
   '/booking': typeof BookingRoute
   '/confirmation': typeof ConfirmationRoute
@@ -257,6 +266,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/analysis'
+    | '/auth'
     | '/availability'
     | '/booking'
     | '/confirmation'
@@ -284,6 +294,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/analysis'
+    | '/auth'
     | '/availability'
     | '/booking'
     | '/confirmation'
@@ -312,6 +323,7 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/analysis'
+    | '/auth'
     | '/availability'
     | '/booking'
     | '/confirmation'
@@ -341,6 +353,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AnalysisRoute: typeof AnalysisRoute
+  AuthRoute: typeof AuthRoute
   AvailabilityRoute: typeof AvailabilityRoute
   BookingRoute: typeof BookingRoute
   ConfirmationRoute: typeof ConfirmationRoute
@@ -374,6 +387,13 @@ declare module '@tanstack/react-router' {
       path: '/analysis'
       fullPath: '/analysis'
       preLoaderRoute: typeof AnalysisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/availability': {
@@ -578,6 +598,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AnalysisRoute: AnalysisRoute,
+  AuthRoute: AuthRoute,
   AvailabilityRoute: AvailabilityRoute,
   BookingRoute: BookingRoute,
   ConfirmationRoute: ConfirmationRoute,
