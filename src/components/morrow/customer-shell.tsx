@@ -1,4 +1,8 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { moveQ } from "@/lib/morrow/queries";
+import { signOut, useSession } from "@/lib/morrow/auth";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
@@ -41,13 +45,27 @@ export function ProgressSteps({ current }: { current: StepKey }) {
 }
 
 export function CustomerShell({ step, children, footer, wide }: { step?: StepKey; children: ReactNode; footer?: ReactNode; wide?: boolean }) {
+  const nav = useNavigate();
+  const session = useSession();
+  const { data: move } = useQuery(moveQ);
+  const locked = !!step && !!move?.bookingRef;
+  // Once booked, the planning steps are closed — always land on the confirmation.
+  useEffect(() => { if (locked) nav({ to: "/confirmation", replace: true }); }, [locked, nav]);
+  if (locked) return <div className="min-h-dvh bg-background" />;
   return (
     <div className="min-h-dvh bg-background">
       <header className="sticky top-0 z-30 border-b border-border/70 bg-background/92 backdrop-blur-sm">
         <div className={cn("mx-auto px-5 py-3.5", wide ? "max-w-5xl" : "max-w-2xl")}>
           <div className="flex items-center justify-between">
             <Logo />
-            <Link to="/voice" className="text-sm text-muted-foreground hover:text-foreground">Talk to Morrow</Link>
+            <div className="flex items-center gap-4 text-sm">
+              <Link to="/voice" className="text-muted-foreground hover:text-foreground">Talk to Morrow</Link>
+              {session ? (
+                <button onClick={signOut} className="flex items-center gap-2 text-muted-foreground hover:text-foreground" title="Sign out">
+                  <span className="grid size-7 place-items-center rounded-full bg-beige text-xs font-medium text-foreground">{session.name[0]}</span>
+                </button>
+              ) : <Link to="/auth" className="text-muted-foreground hover:text-foreground">Sign in</Link>}
+            </div>
           </div>
           {step && <div className="mt-3"><ProgressSteps current={step} /></div>}
         </div>
