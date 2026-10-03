@@ -10,33 +10,227 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AnalysisRouteImport } from './routes/analysis'
+import { Route as AvailabilityRouteImport } from './routes/availability'
+import { Route as BookingRouteImport } from './routes/booking'
+import { Route as ConfirmationRouteImport } from './routes/confirmation'
+import { Route as HomeRouteImport } from './routes/home'
+import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as LogisticsRouteImport } from './routes/logistics'
+import { Route as QuoteRouteImport } from './routes/quote'
+import { Route as StartRouteImport } from './routes/start'
+import { Route as UploadRouteImport } from './routes/upload'
+import { Route as VoiceRouteImport } from './routes/voice'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminJobsIndexRouteImport } from './routes/admin.jobs.index'
+import { Route as AdminJobsIdRouteImport } from './routes/admin.jobs.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalysisRoute = AnalysisRouteImport.update({
+  id: '/analysis',
+  path: '/analysis',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AvailabilityRoute = AvailabilityRouteImport.update({
+  id: '/availability',
+  path: '/availability',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingRoute = BookingRouteImport.update({
+  id: '/booking',
+  path: '/booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmationRoute = ConfirmationRouteImport.update({
+  id: '/confirmation',
+  path: '/confirmation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomeRoute = HomeRouteImport.update({
+  id: '/home',
+  path: '/home',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InventoryRoute = InventoryRouteImport.update({
+  id: '/inventory',
+  path: '/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogisticsRoute = LogisticsRouteImport.update({
+  id: '/logistics',
+  path: '/logistics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuoteRoute = QuoteRouteImport.update({
+  id: '/quote',
+  path: '/quote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StartRoute = StartRouteImport.update({
+  id: '/start',
+  path: '/start',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UploadRoute = UploadRouteImport.update({
+  id: '/upload',
+  path: '/upload',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VoiceRoute = VoiceRouteImport.update({
+  id: '/voice',
+  path: '/voice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminJobsIndexRoute = AdminJobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminJobsIdRoute = AdminJobsIdRouteImport.update({
+  id: '/jobs/$id',
+  path: '/jobs/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/analysis': typeof AnalysisRoute
+  '/availability': typeof AvailabilityRoute
+  '/booking': typeof BookingRoute
+  '/confirmation': typeof ConfirmationRoute
+  '/home': typeof HomeRoute
+  '/inventory': typeof InventoryRoute
+  '/logistics': typeof LogisticsRoute
+  '/quote': typeof QuoteRoute
+  '/start': typeof StartRoute
+  '/upload': typeof UploadRoute
+  '/voice': typeof VoiceRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/jobs/$id': typeof AdminJobsIdRoute
+  '/admin/jobs/': typeof AdminJobsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/analysis': typeof AnalysisRoute
+  '/availability': typeof AvailabilityRoute
+  '/booking': typeof BookingRoute
+  '/confirmation': typeof ConfirmationRoute
+  '/home': typeof HomeRoute
+  '/inventory': typeof InventoryRoute
+  '/logistics': typeof LogisticsRoute
+  '/quote': typeof QuoteRoute
+  '/start': typeof StartRoute
+  '/upload': typeof UploadRoute
+  '/voice': typeof VoiceRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/jobs/$id': typeof AdminJobsIdRoute
+  '/admin/jobs': typeof AdminJobsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/analysis': typeof AnalysisRoute
+  '/availability': typeof AvailabilityRoute
+  '/booking': typeof BookingRoute
+  '/confirmation': typeof ConfirmationRoute
+  '/home': typeof HomeRoute
+  '/inventory': typeof InventoryRoute
+  '/logistics': typeof LogisticsRoute
+  '/quote': typeof QuoteRoute
+  '/start': typeof StartRoute
+  '/upload': typeof UploadRoute
+  '/voice': typeof VoiceRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/jobs/$id': typeof AdminJobsIdRoute
+  '/admin/jobs/': typeof AdminJobsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/analysis'
+    | '/availability'
+    | '/booking'
+    | '/confirmation'
+    | '/home'
+    | '/inventory'
+    | '/logistics'
+    | '/quote'
+    | '/start'
+    | '/upload'
+    | '/voice'
+    | '/admin/'
+    | '/admin/jobs/$id'
+    | '/admin/jobs/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/analysis'
+    | '/availability'
+    | '/booking'
+    | '/confirmation'
+    | '/home'
+    | '/inventory'
+    | '/logistics'
+    | '/quote'
+    | '/start'
+    | '/upload'
+    | '/voice'
+    | '/admin'
+    | '/admin/jobs/$id'
+    | '/admin/jobs'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/analysis'
+    | '/availability'
+    | '/booking'
+    | '/confirmation'
+    | '/home'
+    | '/inventory'
+    | '/logistics'
+    | '/quote'
+    | '/start'
+    | '/upload'
+    | '/voice'
+    | '/admin/'
+    | '/admin/jobs/$id'
+    | '/admin/jobs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AnalysisRoute: typeof AnalysisRoute
+  AvailabilityRoute: typeof AvailabilityRoute
+  BookingRoute: typeof BookingRoute
+  ConfirmationRoute: typeof ConfirmationRoute
+  HomeRoute: typeof HomeRoute
+  InventoryRoute: typeof InventoryRoute
+  LogisticsRoute: typeof LogisticsRoute
+  QuoteRoute: typeof QuoteRoute
+  StartRoute: typeof StartRoute
+  UploadRoute: typeof UploadRoute
+  VoiceRoute: typeof VoiceRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +242,142 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analysis': {
+      id: '/analysis'
+      path: '/analysis'
+      fullPath: '/analysis'
+      preLoaderRoute: typeof AnalysisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/availability': {
+      id: '/availability'
+      path: '/availability'
+      fullPath: '/availability'
+      preLoaderRoute: typeof AvailabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking': {
+      id: '/booking'
+      path: '/booking'
+      fullPath: '/booking'
+      preLoaderRoute: typeof BookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirmation': {
+      id: '/confirmation'
+      path: '/confirmation'
+      fullPath: '/confirmation'
+      preLoaderRoute: typeof ConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home': {
+      id: '/home'
+      path: '/home'
+      fullPath: '/home'
+      preLoaderRoute: typeof HomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inventory': {
+      id: '/inventory'
+      path: '/inventory'
+      fullPath: '/inventory'
+      preLoaderRoute: typeof InventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logistics': {
+      id: '/logistics'
+      path: '/logistics'
+      fullPath: '/logistics'
+      preLoaderRoute: typeof LogisticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quote': {
+      id: '/quote'
+      path: '/quote'
+      fullPath: '/quote'
+      preLoaderRoute: typeof QuoteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/start': {
+      id: '/start'
+      path: '/start'
+      fullPath: '/start'
+      preLoaderRoute: typeof StartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/upload': {
+      id: '/upload'
+      path: '/upload'
+      fullPath: '/upload'
+      preLoaderRoute: typeof UploadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/voice': {
+      id: '/voice'
+      path: '/voice'
+      fullPath: '/voice'
+      preLoaderRoute: typeof VoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/jobs/': {
+      id: '/admin/jobs/'
+      path: '/jobs'
+      fullPath: '/admin/jobs/'
+      preLoaderRoute: typeof AdminJobsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/jobs/$id': {
+      id: '/admin/jobs/$id'
+      path: '/jobs/$id'
+      fullPath: '/admin/jobs/$id'
+      preLoaderRoute: typeof AdminJobsIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminJobsIdRoute: typeof AdminJobsIdRoute
+  AdminJobsIndexRoute: typeof AdminJobsIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+  AdminJobsIdRoute: AdminJobsIdRoute,
+  AdminJobsIndexRoute: AdminJobsIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AnalysisRoute: AnalysisRoute,
+  AvailabilityRoute: AvailabilityRoute,
+  BookingRoute: BookingRoute,
+  ConfirmationRoute: ConfirmationRoute,
+  HomeRoute: HomeRoute,
+  InventoryRoute: InventoryRoute,
+  LogisticsRoute: LogisticsRoute,
+  QuoteRoute: QuoteRoute,
+  StartRoute: StartRoute,
+  UploadRoute: UploadRoute,
+  VoiceRoute: VoiceRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
