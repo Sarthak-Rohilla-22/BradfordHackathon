@@ -11,8 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AnalysisRouteImport } from './routes/analysis'
+import { Route as AvailabilityRouteImport } from './routes/availability'
+import { Route as BookingRouteImport } from './routes/booking'
+import { Route as ConfirmationRouteImport } from './routes/confirmation'
 import { Route as HomeRouteImport } from './routes/home'
 import { Route as InventoryRouteImport } from './routes/inventory'
+import { Route as LogisticsRouteImport } from './routes/logistics'
+import { Route as QuoteRouteImport } from './routes/quote'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as UploadRouteImport } from './routes/upload'
 
@@ -26,6 +31,21 @@ const AnalysisRoute = AnalysisRouteImport.update({
   path: '/analysis',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AvailabilityRoute = AvailabilityRouteImport.update({
+  id: '/availability',
+  path: '/availability',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingRoute = BookingRouteImport.update({
+  id: '/booking',
+  path: '/booking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmationRoute = ConfirmationRouteImport.update({
+  id: '/confirmation',
+  path: '/confirmation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HomeRoute = HomeRouteImport.update({
   id: '/home',
   path: '/home',
@@ -34,6 +54,16 @@ const HomeRoute = HomeRouteImport.update({
 const InventoryRoute = InventoryRouteImport.update({
   id: '/inventory',
   path: '/inventory',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LogisticsRoute = LogisticsRouteImport.update({
+  id: '/logistics',
+  path: '/logistics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuoteRoute = QuoteRouteImport.update({
+  id: '/quote',
+  path: '/quote',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StartRoute = StartRouteImport.update({
@@ -50,16 +80,26 @@ const UploadRoute = UploadRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
+  '/availability': typeof AvailabilityRoute
+  '/booking': typeof BookingRoute
+  '/confirmation': typeof ConfirmationRoute
   '/home': typeof HomeRoute
   '/inventory': typeof InventoryRoute
+  '/logistics': typeof LogisticsRoute
+  '/quote': typeof QuoteRoute
   '/start': typeof StartRoute
   '/upload': typeof UploadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
+  '/availability': typeof AvailabilityRoute
+  '/booking': typeof BookingRoute
+  '/confirmation': typeof ConfirmationRoute
   '/home': typeof HomeRoute
   '/inventory': typeof InventoryRoute
+  '/logistics': typeof LogisticsRoute
+  '/quote': typeof QuoteRoute
   '/start': typeof StartRoute
   '/upload': typeof UploadRoute
 }
@@ -67,22 +107,54 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/analysis': typeof AnalysisRoute
+  '/availability': typeof AvailabilityRoute
+  '/booking': typeof BookingRoute
+  '/confirmation': typeof ConfirmationRoute
   '/home': typeof HomeRoute
   '/inventory': typeof InventoryRoute
+  '/logistics': typeof LogisticsRoute
+  '/quote': typeof QuoteRoute
   '/start': typeof StartRoute
   '/upload': typeof UploadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/analysis' | '/home' | '/inventory' | '/start' | '/upload'
+  fullPaths:
+    | '/'
+    | '/analysis'
+    | '/availability'
+    | '/booking'
+    | '/confirmation'
+    | '/home'
+    | '/inventory'
+    | '/logistics'
+    | '/quote'
+    | '/start'
+    | '/upload'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/analysis' | '/home' | '/inventory' | '/start' | '/upload'
+  to:
+    | '/'
+    | '/analysis'
+    | '/availability'
+    | '/booking'
+    | '/confirmation'
+    | '/home'
+    | '/inventory'
+    | '/logistics'
+    | '/quote'
+    | '/start'
+    | '/upload'
   id:
     | '__root__'
     | '/'
     | '/analysis'
+    | '/availability'
+    | '/booking'
+    | '/confirmation'
     | '/home'
     | '/inventory'
+    | '/logistics'
+    | '/quote'
     | '/start'
     | '/upload'
   fileRoutesById: FileRoutesById
@@ -90,8 +162,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AnalysisRoute: typeof AnalysisRoute
+  AvailabilityRoute: typeof AvailabilityRoute
+  BookingRoute: typeof BookingRoute
+  ConfirmationRoute: typeof ConfirmationRoute
   HomeRoute: typeof HomeRoute
   InventoryRoute: typeof InventoryRoute
+  LogisticsRoute: typeof LogisticsRoute
+  QuoteRoute: typeof QuoteRoute
   StartRoute: typeof StartRoute
   UploadRoute: typeof UploadRoute
 }
@@ -112,6 +189,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AnalysisRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/availability': {
+      id: '/availability'
+      path: '/availability'
+      fullPath: '/availability'
+      preLoaderRoute: typeof AvailabilityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking': {
+      id: '/booking'
+      path: '/booking'
+      fullPath: '/booking'
+      preLoaderRoute: typeof BookingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirmation': {
+      id: '/confirmation'
+      path: '/confirmation'
+      fullPath: '/confirmation'
+      preLoaderRoute: typeof ConfirmationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/home': {
       id: '/home'
       path: '/home'
@@ -124,6 +222,20 @@ declare module '@tanstack/react-router' {
       path: '/inventory'
       fullPath: '/inventory'
       preLoaderRoute: typeof InventoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/logistics': {
+      id: '/logistics'
+      path: '/logistics'
+      fullPath: '/logistics'
+      preLoaderRoute: typeof LogisticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quote': {
+      id: '/quote'
+      path: '/quote'
+      fullPath: '/quote'
+      preLoaderRoute: typeof QuoteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/start': {
@@ -146,8 +258,13 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AnalysisRoute: AnalysisRoute,
+  AvailabilityRoute: AvailabilityRoute,
+  BookingRoute: BookingRoute,
+  ConfirmationRoute: ConfirmationRoute,
   HomeRoute: HomeRoute,
   InventoryRoute: InventoryRoute,
+  LogisticsRoute: LogisticsRoute,
+  QuoteRoute: QuoteRoute,
   StartRoute: StartRoute,
   UploadRoute: UploadRoute,
 }
