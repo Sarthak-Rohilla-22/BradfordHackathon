@@ -23,6 +23,16 @@ import { Route as StartRouteImport } from './routes/start'
 import { Route as UploadRouteImport } from './routes/upload'
 import { Route as VoiceRouteImport } from './routes/voice'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAiRouteImport } from './routes/admin.ai'
+import { Route as AdminCalendarRouteImport } from './routes/admin.calendar'
+import { Route as AdminCatalogueRouteImport } from './routes/admin.catalogue'
+import { Route as AdminCrewRouteImport } from './routes/admin.crew'
+import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
+import { Route as AdminMemoryRouteImport } from './routes/admin.memory'
+import { Route as AdminPricingRouteImport } from './routes/admin.pricing'
+import { Route as AdminQuotesRouteImport } from './routes/admin.quotes'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminVehiclesRouteImport } from './routes/admin.vehicles'
 import { Route as AdminJobsIndexRouteImport } from './routes/admin.jobs.index'
 import { Route as AdminJobsIdRouteImport } from './routes/admin.jobs.$id'
 
@@ -96,6 +106,56 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAiRoute = AdminAiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCalendarRoute = AdminCalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCatalogueRoute = AdminCatalogueRouteImport.update({
+  id: '/catalogue',
+  path: '/catalogue',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCrewRoute = AdminCrewRouteImport.update({
+  id: '/crew',
+  path: '/crew',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCustomersRoute = AdminCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminMemoryRoute = AdminMemoryRouteImport.update({
+  id: '/memory',
+  path: '/memory',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPricingRoute = AdminPricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminQuotesRoute = AdminQuotesRouteImport.update({
+  id: '/quotes',
+  path: '/quotes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminVehiclesRoute = AdminVehiclesRouteImport.update({
+  id: '/vehicles',
+  path: '/vehicles',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminJobsIndexRoute = AdminJobsIndexRouteImport.update({
   id: '/jobs/',
   path: '/jobs/',
@@ -121,6 +181,16 @@ export interface FileRoutesByFullPath {
   '/start': typeof StartRoute
   '/upload': typeof UploadRoute
   '/voice': typeof VoiceRoute
+  '/admin/ai': typeof AdminAiRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/catalogue': typeof AdminCatalogueRoute
+  '/admin/crew': typeof AdminCrewRoute
+  '/admin/customers': typeof AdminCustomersRoute
+  '/admin/memory': typeof AdminMemoryRoute
+  '/admin/pricing': typeof AdminPricingRoute
+  '/admin/quotes': typeof AdminQuotesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/vehicles': typeof AdminVehiclesRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/jobs/$id': typeof AdminJobsIdRoute
   '/admin/jobs/': typeof AdminJobsIndexRoute
@@ -138,6 +208,16 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/upload': typeof UploadRoute
   '/voice': typeof VoiceRoute
+  '/admin/ai': typeof AdminAiRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/catalogue': typeof AdminCatalogueRoute
+  '/admin/crew': typeof AdminCrewRoute
+  '/admin/customers': typeof AdminCustomersRoute
+  '/admin/memory': typeof AdminMemoryRoute
+  '/admin/pricing': typeof AdminPricingRoute
+  '/admin/quotes': typeof AdminQuotesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/vehicles': typeof AdminVehiclesRoute
   '/admin': typeof AdminIndexRoute
   '/admin/jobs/$id': typeof AdminJobsIdRoute
   '/admin/jobs': typeof AdminJobsIndexRoute
@@ -157,6 +237,16 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/upload': typeof UploadRoute
   '/voice': typeof VoiceRoute
+  '/admin/ai': typeof AdminAiRoute
+  '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/catalogue': typeof AdminCatalogueRoute
+  '/admin/crew': typeof AdminCrewRoute
+  '/admin/customers': typeof AdminCustomersRoute
+  '/admin/memory': typeof AdminMemoryRoute
+  '/admin/pricing': typeof AdminPricingRoute
+  '/admin/quotes': typeof AdminQuotesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/vehicles': typeof AdminVehiclesRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/jobs/$id': typeof AdminJobsIdRoute
   '/admin/jobs/': typeof AdminJobsIndexRoute
@@ -177,6 +267,16 @@ export interface FileRouteTypes {
     | '/start'
     | '/upload'
     | '/voice'
+    | '/admin/ai'
+    | '/admin/calendar'
+    | '/admin/catalogue'
+    | '/admin/crew'
+    | '/admin/customers'
+    | '/admin/memory'
+    | '/admin/pricing'
+    | '/admin/quotes'
+    | '/admin/settings'
+    | '/admin/vehicles'
     | '/admin/'
     | '/admin/jobs/$id'
     | '/admin/jobs/'
@@ -194,6 +294,16 @@ export interface FileRouteTypes {
     | '/start'
     | '/upload'
     | '/voice'
+    | '/admin/ai'
+    | '/admin/calendar'
+    | '/admin/catalogue'
+    | '/admin/crew'
+    | '/admin/customers'
+    | '/admin/memory'
+    | '/admin/pricing'
+    | '/admin/quotes'
+    | '/admin/settings'
+    | '/admin/vehicles'
     | '/admin'
     | '/admin/jobs/$id'
     | '/admin/jobs'
@@ -212,6 +322,16 @@ export interface FileRouteTypes {
     | '/start'
     | '/upload'
     | '/voice'
+    | '/admin/ai'
+    | '/admin/calendar'
+    | '/admin/catalogue'
+    | '/admin/crew'
+    | '/admin/customers'
+    | '/admin/memory'
+    | '/admin/pricing'
+    | '/admin/quotes'
+    | '/admin/settings'
+    | '/admin/vehicles'
     | '/admin/'
     | '/admin/jobs/$id'
     | '/admin/jobs/'
@@ -333,6 +453,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/ai': {
+      id: '/admin/ai'
+      path: '/ai'
+      fullPath: '/admin/ai'
+      preLoaderRoute: typeof AdminAiRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/calendar': {
+      id: '/admin/calendar'
+      path: '/calendar'
+      fullPath: '/admin/calendar'
+      preLoaderRoute: typeof AdminCalendarRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/catalogue': {
+      id: '/admin/catalogue'
+      path: '/catalogue'
+      fullPath: '/admin/catalogue'
+      preLoaderRoute: typeof AdminCatalogueRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/crew': {
+      id: '/admin/crew'
+      path: '/crew'
+      fullPath: '/admin/crew'
+      preLoaderRoute: typeof AdminCrewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/customers': {
+      id: '/admin/customers'
+      path: '/customers'
+      fullPath: '/admin/customers'
+      preLoaderRoute: typeof AdminCustomersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/memory': {
+      id: '/admin/memory'
+      path: '/memory'
+      fullPath: '/admin/memory'
+      preLoaderRoute: typeof AdminMemoryRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pricing': {
+      id: '/admin/pricing'
+      path: '/pricing'
+      fullPath: '/admin/pricing'
+      preLoaderRoute: typeof AdminPricingRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/quotes': {
+      id: '/admin/quotes'
+      path: '/quotes'
+      fullPath: '/admin/quotes'
+      preLoaderRoute: typeof AdminQuotesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/vehicles': {
+      id: '/admin/vehicles'
+      path: '/vehicles'
+      fullPath: '/admin/vehicles'
+      preLoaderRoute: typeof AdminVehiclesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/jobs/': {
       id: '/admin/jobs/'
       path: '/jobs'
@@ -351,12 +541,32 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAiRoute: typeof AdminAiRoute
+  AdminCalendarRoute: typeof AdminCalendarRoute
+  AdminCatalogueRoute: typeof AdminCatalogueRoute
+  AdminCrewRoute: typeof AdminCrewRoute
+  AdminCustomersRoute: typeof AdminCustomersRoute
+  AdminMemoryRoute: typeof AdminMemoryRoute
+  AdminPricingRoute: typeof AdminPricingRoute
+  AdminQuotesRoute: typeof AdminQuotesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminVehiclesRoute: typeof AdminVehiclesRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminJobsIdRoute: typeof AdminJobsIdRoute
   AdminJobsIndexRoute: typeof AdminJobsIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAiRoute: AdminAiRoute,
+  AdminCalendarRoute: AdminCalendarRoute,
+  AdminCatalogueRoute: AdminCatalogueRoute,
+  AdminCrewRoute: AdminCrewRoute,
+  AdminCustomersRoute: AdminCustomersRoute,
+  AdminMemoryRoute: AdminMemoryRoute,
+  AdminPricingRoute: AdminPricingRoute,
+  AdminQuotesRoute: AdminQuotesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminVehiclesRoute: AdminVehiclesRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminJobsIdRoute: AdminJobsIdRoute,
   AdminJobsIndexRoute: AdminJobsIndexRoute,
