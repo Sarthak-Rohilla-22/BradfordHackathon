@@ -1,24 +1,31 @@
-from fastapi import FastAPI
 from app.api.v1.endpoints.router import api_router
-from app.core.database import get_session
-from app.core.test_database import init_test_db, get_test_session
+from app.core.database import init_db
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="YorkMove API",
     description="AI-powered removals operations platform",
-    version="0.1.0"
+    version="0.1.0",
 )
 
-# Route DB dependency to local SQLite test session during local dev
-app.dependency_overrides[get_session] = get_test_session
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.on_event("startup")
 def on_startup():
-    init_test_db()
+  init_db()
 
-@app.get("/health", tags=["System"])
+
+@app.get("/health", include_in_schema=False)
 def health_check():
-    return {"status": "ok"}
+  return {"status": "ok"}
 
-# Mount versioned API routes
+
 app.include_router(api_router, prefix="/api/v1")

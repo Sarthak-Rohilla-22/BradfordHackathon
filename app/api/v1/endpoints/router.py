@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints.enquiry import router as enquiry_router
-from app.api.v1.endpoints.booking import router as booking_router
+from .booking import router as booking_router
+from .enquiry import router as enquiry_router
 
 api_router = APIRouter()
 
