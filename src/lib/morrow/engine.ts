@@ -21,7 +21,7 @@ export function findAccessIssues(move: Move): { issues: AccessIssue[]; unknown: 
   const issues: AccessIssue[] = [];
   for (const item of move.inventory) {
     if (!item.dims) continue;
-    const [a, b] = [item.dims.l, item.dims.w, item.dims.h].sort((x, y) => y - x);
+    const [a = 0, b = 0] = [item.dims.l, item.dims.w, item.dims.h].sort((x, y) => y - x);
     for (const { d, o } of known) {
       if (a > o.h && b > o.w) {
         issues.push({ itemId: item.id, itemName: item.name, dims: item.dims, doorway: d.label, doorDims: o });
@@ -52,7 +52,7 @@ export function computeLogistics(move: Move, catalogue: CatalogueItem[], rules: 
     const it = move.inventory.find((i) => i.id === iss.itemId);
     if (it && !it.dismantle) dismantle += 1;
   }
-  const vehicle = [...rules.vehicles].sort((a, b) => a.capacity - b.capacity).find((v) => v.capacity >= volume) ?? rules.vehicles[rules.vehicles.length - 1];
+  const vehicle = [...rules.vehicles].sort((a, b) => a.capacity - b.capacity).find((v) => v.capacity >= volume) ?? rules.vehicles[rules.vehicles.length - 1]!;
   let crew = maxCrew;
   let crewReason: string | undefined;
   const tough = move.home.stairs === "External stairs" || ["2", "3+"].includes(move.home.floor) && move.home.lift !== "Yes";
@@ -103,7 +103,7 @@ export function computeAvailability(jobs: Job[], vehicleId: string, days = 10): 
     if (d.getDay() === 0) continue; // no Sunday moves
     const date = d.toISOString().slice(0, 10);
     const sameType = jobs.filter((j) => j.date === date && j.status !== "Cancelled" && j.vehicleId.split("-")[0] === vehicleId);
-    SLOT_TIMES.forEach(([s, e], idx) => {
+    SLOT_TIMES.forEach(([s = "", e = ""], idx) => {
       const clash = sameType.some((j) => j.start < e && s < j.end);
       const busy = (i * 7 + idx * 3) % 5 === 0; // crew rota
       out.push({ id: `${date}-${s}`, date, start: s, end: e, available: !clash && !busy });

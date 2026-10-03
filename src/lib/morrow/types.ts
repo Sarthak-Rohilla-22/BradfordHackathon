@@ -1,7 +1,7 @@
 export type DimSource = "estimated" | "confirmed";
 export interface Dims { l: number; w: number; h: number }
 
-export interface Photo { id: string; url: string; name: string; room?: string; status: "uploading" | "uploaded" | "failed"; error?: string }
+export interface Photo { id: string; url: string; name: string; room?: string | undefined; status: "uploading" | "uploaded" | "failed"; error?: string | undefined }
 
 export interface InventoryItem {
   id: string;
@@ -9,17 +9,17 @@ export interface InventoryItem {
   name: string;
   room: string;
   qty: number;
-  dims?: Dims;
-  dimsSource?: DimSource;
+  dims?: Dims | undefined;
+  dimsSource?: DimSource | undefined;
   material: string;
   dismantle: boolean;
   special: boolean;
   notes: string;
-  review?: string; // reason the item needs a look
+  review?: string | undefined; // reason the item needs a look
   addedBy: "ai" | "customer";
 }
 
-export interface Doorway { id: string; label: string; mode: "exact" | "approx" | "size" | "unsure"; width?: number; height?: number; size?: "small" | "standard" | "wide" }
+export interface Doorway { id: string; label: string; mode: "exact" | "approx" | "size" | "unsure"; width?: number | undefined; height?: number | undefined; size?: "small" | "standard" | "wide" }
 
 export interface HomeInfo {
   propertyType: string;
@@ -38,7 +38,7 @@ export interface Logistics {
   vehicleId: string;
   crew: number;
   standardCrew: number;
-  crewReason?: string;
+  crewReason?: string | undefined;
   hours: number;
   dismantleItems: number;
   specialItems: string[];
@@ -63,8 +63,8 @@ export interface Move {
   inventory: InventoryItem[];
   inventoryConfirmed: boolean;
   home: HomeInfo;
-  slot?: Slot;
-  bookingRef?: string;
+  slot?: Slot | undefined;
+  bookingRef?: string | undefined;
 }
 
 export type JobStatus = "New" | "Needs review" | "Estimating" | "Quote ready" | "Confirmed" | "In progress" | "Completed" | "Cancelled";
@@ -87,9 +87,9 @@ export interface Job {
   volume: number;
   hours: number;
   crewIds: string[];
-  move?: Move;
-  logistics?: Logistics;
-  quoteDetail?: Quote;
+  move?: Move | undefined;
+  logistics?: Logistics | undefined;
+  quoteDetail?: Quote | undefined;
   createdAt: string;
 }
 
@@ -125,7 +125,7 @@ export interface PricingRules {
   equipment: { name: string; price: number }[];
 }
 
-export interface Vehicle { id: string; name: string; type: string; capacity: number; status: "Available" | "On job" | "Maintenance"; hourly: number; nextBooking?: string; maintenance: string; reg: string }
-export interface CrewMember { id: string; name: string; role: string; status: "Available" | "Assigned" | "Off"; assignment?: string; skills: string[]; phone: string }
-export interface Customer { id: string; name: string; email: string; phone: string; previousMoves: number; activeBooking?: string; area: string }
-export interface Memory { id: string; kind: "Address" | "AI correction" | "Customer" | "Operational"; title: string; body: string; action?: string; source: string; date: string }
+export interface Vehicle { id: string; name: string; type: string; capacity: number; status: "Available" | "On job" | "Maintenance"; hourly: number; nextBooking?: string | undefined; maintenance: string; reg: string }
+export interface CrewMember { id: string; name: string; role: string; status: "Available" | "Assigned" | "Off"; assignment?: string | undefined; skills: string[]; phone: string }
+export interface Customer { id: string; name: string; email: string; phone: string; previousMoves: number; activeBooking?: string | undefined; area: string }
+export interface Memory { id: string; kind: "Address" | "AI correction" | "Customer" | "Operational"; title: string; body: string; action?: string | undefined; source: string; date: string }

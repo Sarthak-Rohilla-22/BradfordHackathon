@@ -17,7 +17,7 @@ export const Route = createFileRoute("/voice")({
   component: Voice,
 });
 
-const SCRIPT: { who: "morrow" | "you"; text: string; step?: number }[] = [
+const SCRIPT: { who: "morrow" | "you"; text: string; step?: number | undefined }[] = [
   { who: "morrow", text: "Hi, this is Morrow. Where are you moving from?" },
   { who: "you", text: "From Headingley in Leeds.", step: 0 },
   { who: "morrow", text: "Lovely. And where to?" },

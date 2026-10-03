@@ -165,7 +165,7 @@ function Activity({ j }: { j: Job }) {
   ];
   return (
     <ol className="relative max-w-xl space-y-5 border-l border-border pl-6">
-      {ev.map(([d, t, s], i) => <li key={i} className="relative"><span className="absolute -left-[1.84rem] top-1 size-2.5 rounded-full border-2 border-card bg-taupe" /><p className="text-sm font-medium">{t}</p><p className="text-xs text-muted-foreground">{s} · {ukDate(d, { day: "numeric", month: "short" })}</p></li>)}
+      {ev.map(([d, t, s], i) => <li key={i} className="relative"><span className="absolute -left-[1.84rem] top-1 size-2.5 rounded-full border-2 border-card bg-taupe" /><p className="text-sm font-medium">{t}</p><p className="text-xs text-muted-foreground">{s} · {ukDate(d ?? "", { day: "numeric", month: "short" })}</p></li>)}
     </ol>
   );
 }

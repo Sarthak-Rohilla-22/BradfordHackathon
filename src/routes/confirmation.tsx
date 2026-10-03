@@ -6,6 +6,9 @@ import { CustomerShell } from "@/components/morrow/customer-shell";
 import { EmptyState, Hand, gbp, ukDate } from "@/components/morrow/ui";
 import { Button } from "@/components/ui/button";
 import { jobsQ, moveQ } from "@/lib/morrow/queries";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import * as api from "@/lib/morrow/api";
 
 export const Route = createFileRoute("/confirmation")({
   head: () => ({
@@ -20,6 +23,8 @@ export const Route = createFileRoute("/confirmation")({
 });
 
 function Confirmation() {
+  const qc = useQueryClient();
+  const nav = useNavigate();
   const { data: move } = useQuery(moveQ);
   const { data: jobs } = useQuery(jobsQ);
   const job = jobs?.find((j) => j.ref === move?.bookingRef);
@@ -41,6 +46,7 @@ function Confirmation() {
             <motion.path d="M15 27l7 7 15-16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ delay: 0.5, duration: 0.4 }} />
           </motion.svg>
           <h1 className="mt-5 text-3xl font-semibold tracking-[-0.03em]">You're booked.</h1>
+          <p className="mt-2 text-sm text-muted-foreground">This booking is locked in — to change it, contact us.</p>
           <p className="mt-2 text-muted-foreground">Booking reference <span className="tabular font-medium text-foreground">{job.ref}</span></p>
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="mt-8 rounded-lg border border-border bg-card p-5 text-left">
             <p className="text-lg font-semibold">{job.origin} → {job.destination}</p>
@@ -51,7 +57,7 @@ function Confirmation() {
           <Hand className="mt-6">see you on moving day</Hand>
           <div className="mt-8 grid gap-2">
             <Button size="lg" onClick={ics}><CalendarPlus /> Add to calendar</Button>
-            <Button size="lg" variant="outline" asChild><Link to="/quote">View booking</Link></Button>
+            <Button size="lg" variant="outline" onClick={async () => { await api.createMove(); qc.invalidateQueries(); nav({ to: "/start" }); }}>Plan another move</Button>
             <Button size="lg" variant="ghost" asChild><a href="tel:01130000000"><Phone /> Contact Morrow</a></Button>
           </div>
           <p className="mt-10 text-xs text-muted-foreground">Running the demo? <Link to="/admin/jobs/$id" params={{ id: job.id }} className="underline">See this job in the company dashboard</Link></p>

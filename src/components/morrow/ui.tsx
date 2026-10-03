@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import type { JobStatus } from "@/lib/morrow/types";
 
-export function Logo({ className, to = "/" }: { className?: string; to?: string }) {
+export function Logo({ className, to = "/" }: { className?: string | undefined; to?: string | undefined }) {
   return (
     <Link to={to} className={cn("inline-flex items-baseline gap-1.5 text-foreground", className)} aria-label="Morrow home">
       <svg viewBox="0 0 24 24" className="size-5 self-center" aria-hidden>
@@ -16,7 +16,7 @@ export function Logo({ className, to = "/" }: { className?: string; to?: string 
   );
 }
 
-export function Hand({ children, className }: { children: ReactNode; className?: string }) {
+export function Hand({ children, className }: { children: ReactNode; className?: string | undefined }) {
   return <span className={cn("hand inline-block -rotate-2", className)}>{children}</span>;
 }
 
@@ -29,7 +29,7 @@ const TONES: Record<Tone, string> = {
   dark: "bg-primary text-primary-foreground",
   outline: "border border-border text-muted-foreground",
 };
-export function Tag({ tone = "neutral", children, className }: { tone?: Tone; children: ReactNode; className?: string }) {
+export function Tag({ tone = "neutral", children, className }: { tone?: Tone; children: ReactNode; className?: string | undefined }) {
   return <span className={cn("inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[0.7rem] font-medium leading-4", TONES[tone], className)}>{children}</span>;
 }
 
@@ -53,7 +53,7 @@ export function StatusBadge({ status }: { status: JobStatus }) {
   );
 }
 
-export function EmptyState({ title, body, action }: { title: string; body: string; action?: ReactNode }) {
+export function EmptyState({ title, body, action }: { title: string; body: string; action?: ReactNode | undefined }) {
   return (
     <div className="rounded-lg border border-dashed border-border bg-card/60 px-6 py-12 text-center">
       <p className="font-medium">{title}</p>
@@ -63,7 +63,7 @@ export function EmptyState({ title, body, action }: { title: string; body: strin
   );
 }
 
-export function ErrorState({ title = "Something went wrong", body, onRetry }: { title?: string; body: string; onRetry?: () => void }) {
+export function ErrorState({ title = "Something went wrong", body, onRetry }: { title?: string | undefined; body: string; onRetry?: () => void }) {
   return (
     <div role="alert" className="rounded-lg border border-destructive/30 bg-error-soft px-5 py-4">
       <p className="font-medium text-destructive">{title}</p>
@@ -73,7 +73,7 @@ export function ErrorState({ title = "Something went wrong", body, onRetry }: { 
   );
 }
 
-export function Section({ title, children, aside, className }: { title?: string; children: ReactNode; aside?: ReactNode; className?: string }) {
+export function Section({ title, children, aside, className }: { title?: string | undefined; children: ReactNode; aside?: ReactNode | undefined; className?: string | undefined }) {
   return (
     <section className={cn("rounded-lg border border-border bg-card", className)}>
       {title && (

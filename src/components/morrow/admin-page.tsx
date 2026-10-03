@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export function AdminPage({ title, sub, actions, children }: { title: string; sub?: ReactNode; actions?: ReactNode; children: ReactNode }) {
+export function AdminPage({ title, sub, actions, children }: { title: string; sub?: ReactNode | undefined; actions?: ReactNode | undefined; children: ReactNode }) {
   return (
     <div className="mx-auto max-w-[1200px] px-5 py-7 lg:px-8">
       <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
@@ -15,7 +15,7 @@ export function AdminPage({ title, sub, actions, children }: { title: string; su
   );
 }
 
-export function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: string }) {
+export function Stat({ label, value, hint }: { label: string; value: ReactNode; hint?: string | undefined }) {
   return (
     <div className="bg-card px-5 py-4">
       <p className="text-xs text-muted-foreground">{label}</p>

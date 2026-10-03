@@ -23,7 +23,7 @@ function Booking() {
   const nav = useNavigate();
   const qc = useQueryClient();
   const q = useQuery(quoteQ);
-  const book = useMutation({ mutationFn: api.createBooking, onSuccess: () => { qc.invalidateQueries(); nav({ to: "/confirmation" }); } });
+  const book = useMutation({ mutationFn: api.createBooking, onSuccess: () => { qc.invalidateQueries(); nav({ to: "/confirmation", replace: true }); } });
   const d = q.data;
   const rows = d ? [
     ["Move", `${d.move.origin} → ${d.move.destination}`],

@@ -33,7 +33,7 @@ function Analysis() {
     try {
       await api.analyseMove(setDone);
       qc.invalidateQueries();
-      setTimeout(() => nav({ to: "/inventory" }), 500);
+      setTimeout(() => { if (window.location.pathname === "/analysis") nav({ to: "/inventory", replace: true }); }, 500);
     } catch (e) {
       setErr((e as Error).message === "NO_PHOTOS" ? "nophotos" : "fail");
     }

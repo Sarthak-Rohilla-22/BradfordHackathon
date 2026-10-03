@@ -1,5 +1,8 @@
-import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { LogOut } from "lucide-react";
+import { SoftStage } from "@/components/morrow/transition";
+import { signOut, useHydratedSession } from "@/lib/morrow/auth";
 import { Bot, Brain, Calendar, Car, ClipboardList, Cog, LayoutGrid, Menu, PoundSterling, Receipt, Sofa, Users, UserSquare } from "lucide-react";
 import { Logo } from "@/components/morrow/ui";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
@@ -60,15 +63,34 @@ function SideNav({ onNav }: { onNav?: () => void }) {
           </ul>
         ))}
       </nav>
-      <div className="border-t border-sidebar-border px-5 py-4 text-xs text-muted-foreground">
-        <Link to="/" className="hover:text-foreground">← Customer site</Link>
+      <UserBox />
+    </div>
+  );
+}
+
+function UserBox() {
+  const { session } = useHydratedSession();
+  const nav = useNavigate();
+  return (
+    <div className="border-t border-sidebar-border px-4 py-3">
+      <div className="flex items-center gap-2.5">
+        <span className="grid size-8 place-items-center rounded-full bg-beige text-xs font-medium">{session?.name.split(" ").map((x) => x[0]).join("").slice(0, 2)}</span>
+        <div className="min-w-0 flex-1"><p className="truncate text-sm font-medium">{session?.name}</p><p className="truncate text-xs text-muted-foreground">{session?.email}</p></div>
+        <button aria-label="Sign out" onClick={() => { signOut(); nav({ to: "/auth", search: { role: "company" }, replace: true }); }} className="text-muted-foreground hover:text-foreground"><LogOut className="size-4" /></button>
       </div>
+      <Link to="/" className="mt-3 block text-xs text-muted-foreground hover:text-foreground">← Customer site</Link>
     </div>
   );
 }
 
 function AdminLayout() {
   const [open, setOpen] = useState(false);
+  const { session, ready } = useHydratedSession();
+  const nav = useNavigate();
+  const path = useRouterState({ select: (s) => s.location.pathname });
+  const allowed = session?.role === "company";
+  useEffect(() => { if (ready && !allowed) nav({ to: "/auth", search: { role: "company", ...(path.startsWith("/admin") ? { redirect: path } : {}) }, replace: true }); }, [ready, allowed]);
+  if (!ready || !allowed) return <div className="min-h-dvh bg-background" />;
   return (
     <div className="flex min-h-dvh bg-background">
       <aside className="sticky top-0 hidden h-dvh w-56 shrink-0 border-r border-sidebar-border bg-sidebar lg:block"><SideNav /></aside>
@@ -80,7 +102,7 @@ function AdminLayout() {
           <button onClick={() => setOpen(true)} aria-label="Open navigation"><Menu className="size-5" /></button>
           <Logo to="/admin" />
         </div>
-        <Outlet />
+        <SoftStage />
       </div>
     </div>
   );
