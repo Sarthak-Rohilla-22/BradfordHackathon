@@ -24,7 +24,7 @@ export function QuoteBreakdown({ quote }: { quote: Quote }) {
   );
 }
 
-export function LogisticsGrid({ lg, compact }: { lg: Logistics; compact?: boolean }) {
+export function LogisticsGrid({ lg, compact }: { lg: Logistics; compact?: boolean | undefined }) {
   const cells = [
     { icon: Box, label: "Approx. volume", value: `${lg.volume} m³` },
     { icon: Truck, label: "Vehicle", value: lg.vehicle },

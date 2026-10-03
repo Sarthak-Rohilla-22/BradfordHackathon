@@ -44,7 +44,7 @@ export function ProgressSteps({ current }: { current: StepKey }) {
   );
 }
 
-export function CustomerShell({ step, children, footer, wide }: { step?: StepKey; children: ReactNode; footer?: ReactNode; wide?: boolean }) {
+export function CustomerShell({ step, children, footer, wide }: { step?: StepKey | undefined; children: ReactNode; footer?: ReactNode | undefined; wide?: boolean | undefined }) {
   const nav = useNavigate();
   const session = useSession();
   const { data: move } = useQuery(moveQ);
@@ -87,7 +87,7 @@ export function CustomerShell({ step, children, footer, wide }: { step?: StepKey
   );
 }
 
-export function PageTitle({ title, sub, hand }: { title: string; sub?: string; hand?: string }) {
+export function PageTitle({ title, sub, hand }: { title: string; sub?: string | undefined; hand?: string | undefined }) {
   return (
     <div className="mb-8">
       <h1 className="text-[1.85rem] font-semibold leading-tight tracking-[-0.025em] sm:text-[2.2rem]">{title}</h1>

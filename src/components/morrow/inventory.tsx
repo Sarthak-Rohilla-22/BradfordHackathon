@@ -29,7 +29,7 @@ export function QtyStepper({ value, onChange, label }: { value: number; onChange
   );
 }
 
-export function InventoryRow({ item, cat, onQty, onOpen, readOnly }: { item: InventoryItem; cat?: CatalogueItem; onQty?: (n: number) => void; onOpen?: () => void; readOnly?: boolean }) {
+export function InventoryRow({ item, cat, onQty, onOpen, readOnly }: { item: InventoryItem; cat?: CatalogueItem | undefined; onQty?: (n: number) => void; onOpen?: () => void; readOnly?: boolean | undefined }) {
   const vol = volumeOf(item, cat);
   return (
     <motion.li layout initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3 py-3">
@@ -68,7 +68,7 @@ export function InventoryRoom({ room, children, count }: { room: string; childre
 const MATERIALS = ["Unknown", "Wood", "Metal", "Glass", "Fabric", "Leather", "Marble / stone", "Plastic"];
 
 export function InventoryDrawer({ item, cat, rooms, open, onOpenChange, onSave, onDelete }: {
-  item: InventoryItem | null; cat?: CatalogueItem; rooms: string[]; open: boolean; onOpenChange: (o: boolean) => void;
+  item: InventoryItem | null; cat?: CatalogueItem | undefined; rooms: string[]; open: boolean; onOpenChange: (o: boolean) => void;
   onSave: (i: InventoryItem) => void; onDelete: (id: string) => void;
 }) {
   const mobile = useIsMobile();

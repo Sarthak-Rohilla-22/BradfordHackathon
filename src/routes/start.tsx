@@ -77,7 +77,7 @@ function CityField({ label, value, onChange }: { label: string; value: string; o
   );
 }
 
-function Field({ id, label, value, onChange, error, type = "text", autoComplete }: { id: string; label: string; value: string; onChange: (v: string) => void; error?: string; type?: string; autoComplete?: string }) {
+function Field({ id, label, value, onChange, error, type = "text", autoComplete }: { id: string; label: string; value: string; onChange: (v: string) => void; error?: string | undefined; type?: string | undefined; autoComplete?: string | undefined }) {
   return (
     <div className="space-y-1.5">
       <Label htmlFor={id}>{label}</Label>
