@@ -89,7 +89,7 @@ function AdminLayout() {
   const nav = useNavigate();
   const path = useRouterState({ select: (s) => s.location.pathname });
   const allowed = session?.role === "company";
-  useEffect(() => { if (ready && !allowed) nav({ to: "/auth", search: { role: "company", redirect: path }, replace: true }); }, [ready, allowed]);
+  useEffect(() => { if (ready && !allowed) nav({ to: "/auth", search: { role: "company", ...(path.startsWith("/admin") ? { redirect: path } : {}) }, replace: true }); }, [ready, allowed]);
   if (!ready || !allowed) return <div className="min-h-dvh bg-background" />;
   return (
     <div className="flex min-h-dvh bg-background">

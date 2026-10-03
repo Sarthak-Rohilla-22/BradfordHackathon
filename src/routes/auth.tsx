@@ -31,7 +31,7 @@ function Auth() {
   const [sent, setSent] = useState(false);
 
   const done = () => {
-    const to = s.redirect && s.redirect.startsWith("/") ? s.redirect : role === "company" ? "/admin" : "/start";
+    const to = s.redirect && s.redirect.startsWith("/") && !s.redirect.startsWith("/auth") ? s.redirect : role === "company" ? "/admin" : "/start";
     nav({ to, replace: true });
   };
   async function submit(e: React.FormEvent) {
