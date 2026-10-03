@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AnalysisRouteImport } from './routes/analysis'
 import { Route as AvailabilityRouteImport } from './routes/availability'
 import { Route as BookingRouteImport } from './routes/booking'
@@ -21,10 +22,18 @@ import { Route as QuoteRouteImport } from './routes/quote'
 import { Route as StartRouteImport } from './routes/start'
 import { Route as UploadRouteImport } from './routes/upload'
 import { Route as VoiceRouteImport } from './routes/voice'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminJobsIndexRouteImport } from './routes/admin.jobs.index'
+import { Route as AdminJobsIdRouteImport } from './routes/admin.jobs.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AnalysisRoute = AnalysisRouteImport.update({
@@ -82,9 +91,25 @@ const VoiceRoute = VoiceRouteImport.update({
   path: '/voice',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminJobsIndexRoute = AdminJobsIndexRouteImport.update({
+  id: '/jobs/',
+  path: '/jobs/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminJobsIdRoute = AdminJobsIdRouteImport.update({
+  id: '/jobs/$id',
+  path: '/jobs/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/analysis': typeof AnalysisRoute
   '/availability': typeof AvailabilityRoute
   '/booking': typeof BookingRoute
@@ -96,6 +121,9 @@ export interface FileRoutesByFullPath {
   '/start': typeof StartRoute
   '/upload': typeof UploadRoute
   '/voice': typeof VoiceRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/jobs/$id': typeof AdminJobsIdRoute
+  '/admin/jobs/': typeof AdminJobsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -110,10 +138,14 @@ export interface FileRoutesByTo {
   '/start': typeof StartRoute
   '/upload': typeof UploadRoute
   '/voice': typeof VoiceRoute
+  '/admin': typeof AdminIndexRoute
+  '/admin/jobs/$id': typeof AdminJobsIdRoute
+  '/admin/jobs': typeof AdminJobsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/analysis': typeof AnalysisRoute
   '/availability': typeof AvailabilityRoute
   '/booking': typeof BookingRoute
@@ -125,11 +157,15 @@ export interface FileRoutesById {
   '/start': typeof StartRoute
   '/upload': typeof UploadRoute
   '/voice': typeof VoiceRoute
+  '/admin/': typeof AdminIndexRoute
+  '/admin/jobs/$id': typeof AdminJobsIdRoute
+  '/admin/jobs/': typeof AdminJobsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/analysis'
     | '/availability'
     | '/booking'
@@ -141,6 +177,9 @@ export interface FileRouteTypes {
     | '/start'
     | '/upload'
     | '/voice'
+    | '/admin/'
+    | '/admin/jobs/$id'
+    | '/admin/jobs/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -155,9 +194,13 @@ export interface FileRouteTypes {
     | '/start'
     | '/upload'
     | '/voice'
+    | '/admin'
+    | '/admin/jobs/$id'
+    | '/admin/jobs'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/analysis'
     | '/availability'
     | '/booking'
@@ -169,10 +212,14 @@ export interface FileRouteTypes {
     | '/start'
     | '/upload'
     | '/voice'
+    | '/admin/'
+    | '/admin/jobs/$id'
+    | '/admin/jobs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AnalysisRoute: typeof AnalysisRoute
   AvailabilityRoute: typeof AvailabilityRoute
   BookingRoute: typeof BookingRoute
@@ -193,6 +240,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/analysis': {
@@ -272,11 +326,47 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VoiceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/jobs/': {
+      id: '/admin/jobs/'
+      path: '/jobs'
+      fullPath: '/admin/jobs/'
+      preLoaderRoute: typeof AdminJobsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/jobs/$id': {
+      id: '/admin/jobs/$id'
+      path: '/jobs/$id'
+      fullPath: '/admin/jobs/$id'
+      preLoaderRoute: typeof AdminJobsIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminJobsIdRoute: typeof AdminJobsIdRoute
+  AdminJobsIndexRoute: typeof AdminJobsIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+  AdminJobsIdRoute: AdminJobsIdRoute,
+  AdminJobsIndexRoute: AdminJobsIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   AnalysisRoute: AnalysisRoute,
   AvailabilityRoute: AvailabilityRoute,
   BookingRoute: BookingRoute,
