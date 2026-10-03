@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.core.database import create_db_and_tables
-from app.api.v1.router import api_router
+from app.api.v1.endpoints.router import api_router
 
 app = FastAPI(title="YorkMove API")
 

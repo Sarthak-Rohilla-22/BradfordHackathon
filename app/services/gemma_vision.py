@@ -3,6 +3,12 @@ import google.genai as genai
 from pydantic import BaseModel
 from typing import List
 
+class InventoryItem(BaseModel):
+    name: str
+    quantity: int = 1
+    estimated_volume_m3: float
+    location: str | None = None
+
 class ImageInventoryDetection(BaseModel):
     room_type: str
     detected_items: List[InventoryItem]
